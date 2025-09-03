@@ -1,0 +1,30 @@
+manifestVersion: subsquid.io/v0.1
+name: external-db-squid
+#tag: development
+description: A squid that uses an external DB and has tests
+build: 
+deploy:
+  env:
+    DB_HOST: ${{ secrets.MY_PGHOST }}
+    DB_NAME: ${{ secrets.MY_PGDATABASE }}
+    DB_USER: ${{ secrets.MY_PGUSER }}
+    DB_PASS: ${{ secrets.MY_PGPASSWORD }}
+    DB_SSL: true
+  addons:
+    rpc:
+      - arbitrum-one.http
+  processor:
+    env:
+      ARBITRUM_RPC: ${{ addons.rpc.arbitrum_one.http }} # use an external WSS if latency is critical
+      CONTRACT_ADDRESS: '0x1337420ded5adb9980cfc35f8f2b054ea86f8ab1' # quote so that the value is read as a string
+      START_BLOCK: 194120655
+    cmd:
+      - sqd
+      - process:prod
+  api:
+    cmd:
+      - sqd
+      - serve:prod
+scale:
+  processor:
+    profile: small
