@@ -5,12 +5,14 @@ description: A squid that uses an external DB and has tests
 build: 
 deploy:
   env:
+    # it's also possible to pass a full connection string via DB_URL when this is more convenient
     DB_HOST: ${{ secrets.MY_PGHOST }}
     DB_NAME: ${{ secrets.MY_PGDATABASE }}
     DB_USER: ${{ secrets.MY_PGUSER }}
     DB_PASS: ${{ secrets.MY_PGPASSWORD }}
     DB_SSL: true
   addons:
+    # enabling out internal HTTP RPC service
     rpc:
       - arbitrum-one.http
   processor:
