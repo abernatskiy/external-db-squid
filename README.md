@@ -64,3 +64,7 @@ npm test
 ```
 
 There's also a [Github workflow](/.github/workflows/run_tests.yml) that runs the test.
+
+## Known issues
+
+This example won't work with [sqd run](https://docs.sqd.ai/squid-cli/run/).
